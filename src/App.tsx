@@ -1,32 +1,43 @@
-import "./App.css";
 import { useState } from "react";
-import { Container } from "./components/Styled/Container";
-import { FlexWrapper } from "./components/Styled/FlexWrapper";
-import { Counter, CounterValue } from "./components/Counter/Counter";
+import "./App.css";
+import { Counter } from "./Components/Counter";
+import { Container, createTheme, CssBaseline, Switch, ThemeProvider } from "@mui/material";
 
 export const App = () => {
-  const mainTitle = "My Counter";
-  const minValue = 0;
-  const startMaxValue = 5;
-  const [startValue, setStartValue] = useState<CounterValue>(minValue);
-  const [maxValue, setMaxValue] = useState<CounterValue>(startMaxValue);
-  const [counterValue, setCounterValue] = useState<CounterValue>(minValue);
+  const minCounterValue = 0;
+  const startMaxCounterValue = 5;
+
+  const [startCounterValue, setStartCounterValue] = useState<number>(minCounterValue);
+  const [maxCounterValue, setMaxCounterValue] = useState<number>(startMaxCounterValue);
+  const [counterValue, setCounterValue] = useState<number>(startCounterValue);
+
+  const [isDrarkMode, setIsDarkMode] = useState(false);
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#087EA4",
+      },
+      mode: isDrarkMode ? "dark" : "light",
+    },
+  });
 
   return (
-    <div className="App">
-      <Container>
-        <FlexWrapper direction="column" gap={10} align="center">
-          <h1>{mainTitle}</h1>
+    <div className="app">
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Container maxWidth={"lg"}>
+          <Switch checked={isDrarkMode} onChange={() => setIsDarkMode(!isDrarkMode)} />
           <Counter
-            value={counterValue}
-            maxCounterValue={maxValue}
-            startCounterValue={startValue}
+            minCounterValue={minCounterValue}
+            startCounterValue={startCounterValue}
+            maxCounterValue={maxCounterValue}
+            counterValue={counterValue}
             changeCounterValue={setCounterValue}
-            changeStartValue={setStartValue}
-            changeMaxValue={setMaxValue}
+            setStartCounterValue={setStartCounterValue}
+            setMaxCounterValue={setMaxCounterValue}
           />
-        </FlexWrapper>
-      </Container>
+        </Container>
+      </ThemeProvider>
     </div>
   );
 };
