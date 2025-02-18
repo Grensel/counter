@@ -1,21 +1,79 @@
 import { ChangeEvent, useState } from "react";
+import { S } from "./SettingInput_Styled";
+import { Box, Button, Typography } from "@mui/material";
+import Grid from "@mui/material/Grid2";
+import { buttonStyle, containerSSx, containerSx, counterCon } from "../Counter.styles";
 
 type SetInputPropsType = {
-  startValue: number;
+  maxCounterValue: number;
   minCounterValue: number;
-  setValueHandler: (value: number) => void;
+  setMaxValueHandler: (value: number) => void;
+  setStartValueHandler: (value: number) => void;
+  changeCounterValue: (value: number) => void;
 };
 
-export const SettingInput = ({
+export const CounterSetting = ({
   minCounterValue,
-  startValue,
-  setValueHandler,
+  maxCounterValue,
+  setMaxValueHandler,
+  setStartValueHandler,
+  changeCounterValue,
 }: SetInputPropsType) => {
-  const [value, setValue] = useState(startValue);
-  const valueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(+e.currentTarget.value);
+  const [startValue, setStartValue] = useState(minCounterValue);
+  const [maxValue, setMaxValue] = useState(maxCounterValue);
+  const maxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setMaxValue(+e.currentTarget.value);
   };
-  setValueHandler(value);
+  const startValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setStartValue(+e.currentTarget.value);
+  };
 
-  return <input value={value} onChange={valueHandler} min={minCounterValue} type={"number"} />;
+  const onClickHandler = () => {
+    setStartValueHandler(startValue);
+    changeCounterValue(startValue);
+    setMaxValueHandler(maxValue);
+  };
+
+  const setDisabled = startValue >= maxValue;
+
+  return (
+    <Grid container size={5} direction={"column"} justifyContent={"space-around"} sx={counterCon}>
+      <Box sx={containerSx} display={"flex"} flexDirection={"column"} gap={"20px"}>
+        <S.Input>
+          <S.Label>Max Value</S.Label>
+          <S.InputNumber
+            value={maxValue}
+            onChange={maxValueHandler}
+            min={minCounterValue}
+            type={"number"}
+          />
+        </S.Input>
+        <Typography variant="h6" component="h2" color="rgba(218, 29, 29,0.9)">
+          Incorrect value!
+        </Typography>
+        <S.Input>
+          <S.Label>Start Value</S.Label>
+          <S.InputNumber
+            value={startValue}
+            onChange={startValueHandler}
+            min={minCounterValue}
+            type={"number"}
+          />
+        </S.Input>
+      </Box>
+
+      <Box sx={containerSSx}>
+        <Button
+          disabled={setDisabled}
+          size={"large"}
+          variant={"outlined"}
+          color="primary"
+          onClick={onClickHandler}
+          sx={buttonStyle}
+        >
+          set
+        </Button>
+      </Box>
+    </Grid>
+  );
 };
