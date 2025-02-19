@@ -1,22 +1,32 @@
 import { SxProps } from "@mui/material";
-export const containerSx: SxProps = {
+export const containerForTwoEl: SxProps = {
   display: "flex",
   justifyContent: "space-between",
-  p: "25px",
+  p: "26px",
   border: "2px solid rgba(1, 74, 158, 0.98)",
   boxShadow: "0px 0px 10px 10px rgba(1, 74, 158, 0.2)",
   borderRadius: "10px",
 };
-export const containerSSx: SxProps = {
+export const containerForOneElSx: SxProps = {
   display: "flex",
   justifyContent: "center",
-  p: "25px",
+  p: "26px",
+  border: "2px solid rgba(1, 74, 158, 0.98)",
+  boxShadow: "0px 0px 10px 10px rgba(1, 74, 158, 0.2)",
+  borderRadius: "10px",
+};
+export const containerCounterBar: SxProps = {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  height: "144px",
+  p: "26px",
   border: "2px solid rgba(1, 74, 158, 0.98)",
   boxShadow: "0px 0px 10px 10px rgba(1, 74, 158, 0.2)",
   borderRadius: "10px",
 };
 export const counterCon: SxProps = {
-  p: "25px",
+  p: "26px",
   border: "2px solid rgba(1, 74, 158, 0.98)",
   borderRadius: "10px",
   backgroundColor: "rgba(32, 32, 32, 0.84)",

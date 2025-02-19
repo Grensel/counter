@@ -5,8 +5,8 @@ import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
 import {
   buttonStyle,
-  containerSSx,
-  containerSx,
+  containerCounterBar,
+  containerForTwoEl,
   counterCon,
   CounterDisplayValue,
 } from "./Counter.styles";
@@ -46,6 +46,7 @@ export const Counter = ({
 
   const incDisabled = counterValue === maxCounterValue;
   const resetDisabled = counterValue === startCounterValue;
+  const setingDisabled = startValue >= maxValue;
 
   return (
     <Grid container justifyContent={"space-around"} alignItems={"center"} sx={{ height: "100vh" }}>
@@ -53,6 +54,7 @@ export const Counter = ({
         minCounterValue={minCounterValue}
         startValue={startValue}
         maxValue={maxValue}
+        setingDisabled={setingDisabled}
         setMaxValueHandler={setMaxCounterValue}
         setStartValueHandler={setStartCounterValue}
         changeCounterValue={changeCounterValue}
@@ -60,13 +62,19 @@ export const Counter = ({
         setStartValue={setStartValue}
       />
       <Grid container size={5} direction={"column"} justifyContent={"space-around"} sx={counterCon}>
-        <Box sx={containerSSx}>
-          <Typography variant="h1" component="h2" sx={CounterDisplayValue(incDisabled)}>
-            {counterValue}
-          </Typography>
+        <Box sx={containerCounterBar}>
+          {setingDisabled ? (
+            <Typography variant="h3" component="h2" color="rgba(218, 29, 29,0.9)">
+              Incorrect value!
+            </Typography>
+          ) : (
+            <Typography variant="h1" component="h2" sx={CounterDisplayValue(incDisabled)}>
+              {counterValue}
+            </Typography>
+          )}
         </Box>
 
-        <Box sx={containerSx}>
+        <Box sx={containerForTwoEl}>
           <Button
             disabled={incDisabled}
             size={"large"}

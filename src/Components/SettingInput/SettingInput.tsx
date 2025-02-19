@@ -1,13 +1,14 @@
 import { ChangeEvent } from "react";
 import { S } from "./SettingInput_Styled";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import Grid from "@mui/material/Grid2";
-import { buttonStyle, containerSSx, containerSx, counterCon } from "../Counter.styles";
+import { buttonStyle, containerForOneElSx, containerForTwoEl, counterCon } from "../Counter.styles";
 
 type SetInputPropsType = {
   minCounterValue: number;
   startValue: number;
   maxValue: number;
+  setingDisabled: boolean;
   setMaxValueHandler: (value: number) => void;
   setStartValueHandler: (value: number) => void;
   changeCounterValue: (value: number) => void;
@@ -19,6 +20,7 @@ export const CounterSetting = ({
   minCounterValue,
   startValue,
   maxValue,
+  setingDisabled,
   setMaxValueHandler,
   setStartValueHandler,
   changeCounterValue,
@@ -38,41 +40,34 @@ export const CounterSetting = ({
     setMaxValueHandler(maxValue);
   };
 
-  const setDisabled = startValue >= maxValue;
-
   return (
     <Grid container size={5} direction={"column"} justifyContent={"space-around"} sx={counterCon}>
-      <Box sx={containerSx} display={"flex"} flexDirection={"column"} gap={"20px"}>
+      <Box sx={containerForTwoEl} display={"flex"} flexDirection={"column"} gap={"20px"}>
         <S.Input>
-          <S.Label>Max Value</S.Label>
+          <S.Label error={setingDisabled}>Max Value</S.Label>
           <S.InputNumber
             value={maxValue}
             onChange={maxValueHandler}
             min={minCounterValue}
             type={"number"}
-            error={setDisabled}
+            error={setingDisabled}
           />
         </S.Input>
-        {setDisabled && (
-          <Typography variant="h6" component="h2" color="rgba(218, 29, 29,0.9)">
-            Incorrect value!
-          </Typography>
-        )}
         <S.Input>
-          <S.Label>Start Value</S.Label>
+          <S.Label error={setingDisabled}>Start Value</S.Label>
           <S.InputNumber
             value={startValue}
             onChange={startValueHandler}
             min={minCounterValue}
             type={"number"}
-            error={setDisabled}
+            error={setingDisabled}
           />
         </S.Input>
       </Box>
 
-      <Box sx={containerSSx}>
+      <Box sx={containerForOneElSx}>
         <Button
-          disabled={setDisabled}
+          disabled={setingDisabled}
           size={"large"}
           variant={"outlined"}
           color="primary"
