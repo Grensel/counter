@@ -15,18 +15,26 @@ export type CounterPropsType = {
   startCounterValue: number;
   maxCounterValue: number;
   counterValue: number;
+  startValue: number;
+  maxValue: number;
   changeCounterValue: (value: number) => void;
   setStartCounterValue: (value: number) => void;
   setMaxCounterValue: (value: number) => void;
+  setMaxValue: (value: number) => void;
+  setStartValue: (value: number) => void;
 };
 export const Counter = ({
   minCounterValue,
   startCounterValue,
   maxCounterValue,
   counterValue,
+  startValue,
+  maxValue,
   changeCounterValue,
   setStartCounterValue,
   setMaxCounterValue,
+  setMaxValue,
+  setStartValue,
 }: CounterPropsType) => {
   const changeCounterValueHandler = () => {
     changeCounterValue(counterValue < maxCounterValue ? counterValue + 1 : counterValue);
@@ -36,17 +44,20 @@ export const Counter = ({
     changeCounterValue(startCounterValue);
   };
 
-  const incDisabled: boolean = counterValue === maxCounterValue;
-  const resetDisabled: boolean = counterValue === startCounterValue;
+  const incDisabled = counterValue === maxCounterValue;
+  const resetDisabled = counterValue === startCounterValue;
 
   return (
     <Grid container justifyContent={"space-around"} alignItems={"center"} sx={{ height: "100vh" }}>
       <CounterSetting
         minCounterValue={minCounterValue}
-        maxCounterValue={maxCounterValue}
+        startValue={startValue}
+        maxValue={maxValue}
         setMaxValueHandler={setMaxCounterValue}
         setStartValueHandler={setStartCounterValue}
         changeCounterValue={changeCounterValue}
+        setMaxValue={setMaxValue}
+        setStartValue={setStartValue}
       />
       <Grid container size={5} direction={"column"} justifyContent={"space-around"} sx={counterCon}>
         <Box sx={containerSSx}>

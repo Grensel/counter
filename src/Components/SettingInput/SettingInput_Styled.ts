@@ -5,16 +5,18 @@ const Input = styled.div`
   margin-top: 5px;
 `;
 
-const InputNumber = styled.input`
+const InputNumber = styled.input<{ error: boolean }>`
   padding: 15px 25px 10px;
-  border: solid 1px rgba(1, 74, 158, 0.98);
+  border: ${props =>
+    props.error ? "1px solid rgba(201, 25, 25, 0.22)" : "1px solid rgba(1, 74, 158, 0.98)"};
   box-shadow: 0px 0px 10px 10px rgba(1, 74, 158, 0.2);
   background-color: transparent;
   outline: none;
   border-radius: 3px;
   height: 30px;
   font-size: 20px;
-  color: rgb(25, 118, 210);
+  color: ${props => (props.error ? "rgb(218, 29, 29)" : "rgb(25, 118, 210)")};
+  /* color: rgb(25, 118, 210); */
 `;
 const Label = styled.label`
   margin-left: 8px;

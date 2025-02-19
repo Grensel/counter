@@ -1,26 +1,30 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import { S } from "./SettingInput_Styled";
 import { Box, Button, Typography } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { buttonStyle, containerSSx, containerSx, counterCon } from "../Counter.styles";
 
 type SetInputPropsType = {
-  maxCounterValue: number;
   minCounterValue: number;
+  startValue: number;
+  maxValue: number;
   setMaxValueHandler: (value: number) => void;
   setStartValueHandler: (value: number) => void;
   changeCounterValue: (value: number) => void;
+  setMaxValue: (value: number) => void;
+  setStartValue: (value: number) => void;
 };
 
 export const CounterSetting = ({
   minCounterValue,
-  maxCounterValue,
+  startValue,
+  maxValue,
   setMaxValueHandler,
   setStartValueHandler,
   changeCounterValue,
+  setMaxValue,
+  setStartValue,
 }: SetInputPropsType) => {
-  const [startValue, setStartValue] = useState(minCounterValue);
-  const [maxValue, setMaxValue] = useState(maxCounterValue);
   const maxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setMaxValue(+e.currentTarget.value);
   };
@@ -46,11 +50,14 @@ export const CounterSetting = ({
             onChange={maxValueHandler}
             min={minCounterValue}
             type={"number"}
+            error={setDisabled}
           />
         </S.Input>
-        <Typography variant="h6" component="h2" color="rgba(218, 29, 29,0.9)">
-          Incorrect value!
-        </Typography>
+        {setDisabled && (
+          <Typography variant="h6" component="h2" color="rgba(218, 29, 29,0.9)">
+            Incorrect value!
+          </Typography>
+        )}
         <S.Input>
           <S.Label>Start Value</S.Label>
           <S.InputNumber
@@ -58,6 +65,7 @@ export const CounterSetting = ({
             onChange={startValueHandler}
             min={minCounterValue}
             type={"number"}
+            error={setDisabled}
           />
         </S.Input>
       </Box>
