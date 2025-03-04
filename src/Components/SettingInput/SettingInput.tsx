@@ -39,23 +39,23 @@ export const CounterSetting = ({
     <Grid container size={5} direction={"column"} justifyContent={"space-around"} sx={counterCon}>
       <Box sx={containerForTwoEl} display={"flex"} flexDirection={"column"} gap={"20px"}>
         <S.Input>
-          <S.Label {...(setingDisabled ? { error: true } : {})} >Max Value</S.Label>
+          <S.Label $error={setingDisabled} >Max Value</S.Label>
           <S.InputNumber
             value={setting.maxValue}
             onChange={maxValueHandler}
             min={minCounterValue}
             type={"number"}
-            {...(setingDisabled ? { error: true } : {})}
+            $error={setingDisabled}
           />
         </S.Input>
         <S.Input>
-          <S.Label error={setingDisabled}>Start Value</S.Label>
+          <S.Label $error={setingDisabled}>Start Value</S.Label>
           <S.InputNumber
             value={setting.startValue}
             onChange={startValueHandler}
             min={minCounterValue}
             type={"number"}
-            {...(setingDisabled ? { error: true } : {})}
+            $error={setingDisabled}
           />
         </S.Input>
       </Box>
