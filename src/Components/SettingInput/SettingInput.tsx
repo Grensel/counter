@@ -3,64 +3,59 @@ import { S } from "./SettingInput_Styled";
 import { Box, Button } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { buttonStyle, containerForOneElSx, containerForTwoEl, counterCon } from "../Counter.styles";
+import { CounterSettingsType } from "../../app/App";
+import { useAppDispatch } from "../../common/hooks/useAppDispatch";
+import { changeSettingsMaxValueAC, changeSettingsStartValueAC } from "../../model/counter-setting-reducer";
+import { changeCounterValueAC, changeMaxValueAC, changeStartValueAC } from "../../model/counter-reducer";
+import { minCounterValue } from "../../common/constants";
 
 type SetInputPropsType = {
-  minCounterValue: number;
-  startValue: number;
-  maxValue: number;
-  setingDisabled: boolean;
-  setMaxValueHandler: (value: number) => void;
-  setStartValueHandler: (value: number) => void;
-  changeCounterValue: (value: number) => void;
-  setMaxValue: (value: number) => void;
-  setStartValue: (value: number) => void;
+  setingDisabled: boolean
+  setting: CounterSettingsType
 };
 
 export const CounterSetting = ({
-  minCounterValue,
-  startValue,
-  maxValue,
   setingDisabled,
-  setMaxValueHandler,
-  setStartValueHandler,
-  changeCounterValue,
-  setMaxValue,
-  setStartValue,
+  setting,
 }: SetInputPropsType) => {
+  const dispatch = useAppDispatch()
+
   const maxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setMaxValue(+e.currentTarget.value);
+    dispatch(changeSettingsMaxValueAC(+e.currentTarget.value));
   };
   const startValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setStartValue(+e.currentTarget.value);
+    dispatch(changeSettingsStartValueAC(+e.currentTarget.value));
   };
 
   const onClickHandler = () => {
-    setStartValueHandler(startValue);
-    changeCounterValue(startValue);
-    setMaxValueHandler(maxValue);
+    console.log('set');
+
+    dispatch(changeCounterValueAC(setting.startValue));
+    dispatch(changeStartValueAC(setting.startValue));
+    dispatch(changeMaxValueAC(setting.maxValue));
   };
 
   return (
     <Grid container size={5} direction={"column"} justifyContent={"space-around"} sx={counterCon}>
       <Box sx={containerForTwoEl} display={"flex"} flexDirection={"column"} gap={"20px"}>
         <S.Input>
-          <S.Label error={setingDisabled}>Max Value</S.Label>
+          <S.Label {...(setingDisabled ? { error: true } : {})} >Max Value</S.Label>
           <S.InputNumber
-            value={maxValue}
+            value={setting.maxValue}
             onChange={maxValueHandler}
             min={minCounterValue}
             type={"number"}
-            error={setingDisabled}
+            {...(setingDisabled ? { error: true } : {})}
           />
         </S.Input>
         <S.Input>
           <S.Label error={setingDisabled}>Start Value</S.Label>
           <S.InputNumber
-            value={startValue}
+            value={setting.startValue}
             onChange={startValueHandler}
             min={minCounterValue}
             type={"number"}
-            error={setingDisabled}
+            {...(setingDisabled ? { error: true } : {})}
           />
         </S.Input>
       </Box>

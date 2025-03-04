@@ -5,7 +5,7 @@ const Input = styled.div`
   margin-top: 5px;
 `;
 
-const InputNumber = styled.input<{ error: boolean }>`
+const InputNumber = styled.input<{ error?: boolean }>`
   padding: 15px 25px 10px;
   border: ${props =>
     props.error ? "1px solid rgba(201, 25, 25, 0.22)" : "1px solid rgba(1, 74, 158, 0.98)"};
@@ -21,7 +21,7 @@ const InputNumber = styled.input<{ error: boolean }>`
   font-size: 20px;
   color: ${props => (props.error ? "rgb(218, 29, 29)" : "rgb(25, 118, 210)")};
 `;
-const Label = styled.label<{ error: boolean }>`
+const Label = styled.label<{ error?: boolean }>`
   margin-left: 8px;
   font-weight: lighter;
   position: absolute;
