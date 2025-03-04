@@ -4,6 +4,10 @@ import { Container } from "@mui/material";
 import { selectCounter } from "../model/counter-selector";
 import { useAppSelector } from "../common/hooks/useAppSelector";
 import { selectCounterSetting } from "../model/counter-setting-selector";
+import { useEffect } from "react";
+import { useAppDispatch } from "../common/hooks/useAppDispatch";
+import { changeCounterValueAC, changeMaxValueAC, changeStartValueAC } from "../model/counter-reducer";
+import { changeSettingsMaxValueAC, changeSettingsStartValueAC } from "../model/counter-setting-reducer";
 
 export type CounterType = {
   counterValue: number
@@ -18,42 +22,43 @@ export type CounterSettingsType = {
 export const App = () => {
   const counter = useAppSelector(selectCounter)
   const setting = useAppSelector(selectCounterSetting)
+  const dispatch = useAppDispatch()
 
-  // useEffect(() => {
-  //   const startValueAsString = localStorage.getItem("startKey");
-  //   if (startValueAsString) {
-  //     const newValue = JSON.parse(startValueAsString);
-  //     setStartValue(newValue);
-  //   }
-  //   const maxValueAsString = localStorage.getItem("maxKey");
-  //   if (maxValueAsString) {
-  //     const newValue = JSON.parse(maxValueAsString);
-  //     setMaxValue(newValue);
-  //   }
-  //   const startCounterValueAsString = localStorage.getItem("startCounterKey") as string;
-  //   if (startValueAsString) {
-  //     const newValue = JSON.parse(startCounterValueAsString);
-  //     setStartCounterValue(newValue);
-  //   }
-  //   const maxCounterValueAsString = localStorage.getItem("maxCounterKey") as string;
-  //   if (maxValueAsString) {
-  //     const newValue = JSON.parse(maxCounterValueAsString);
-  //     setMaxCounterValue(newValue);
-  //   }
-  //   const ValueAsString = localStorage.getItem("valueKey");
-  //   if (ValueAsString) {
-  //     const newValue = JSON.parse(ValueAsString);
-  //     setCounterValue(newValue);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const ValueAsString = localStorage.getItem("valueKey");
+    if (ValueAsString) {
+      const newValue = JSON.parse(ValueAsString);
+      dispatch(changeCounterValueAC(newValue));
+    }
+    const startValueAsString = localStorage.getItem("startKey");
+    if (startValueAsString) {
+      const newValue = JSON.parse(startValueAsString);
+      dispatch(changeStartValueAC(newValue));
+    }
+    const maxValueAsString = localStorage.getItem("maxKey");
+    if (maxValueAsString) {
+      const newValue = JSON.parse(maxValueAsString);
+      dispatch(changeMaxValueAC(newValue));
+    }
+    const startCounterValueAsString = localStorage.getItem("startSettingKey") as string;
+    if (startValueAsString) {
+      const newValue = JSON.parse(startCounterValueAsString);
+      dispatch(changeSettingsStartValueAC(newValue));
+    }
+    const maxCounterValueAsString = localStorage.getItem("maxSettingKey") as string;
+    if (maxValueAsString) {
+      const newValue = JSON.parse(maxCounterValueAsString);
+      dispatch(changeSettingsMaxValueAC(newValue));
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   localStorage.setItem("startKey", JSON.stringify(startValue));
-  //   localStorage.setItem("maxKey", JSON.stringify(maxValue));
-  //   localStorage.setItem("startCounterKey", JSON.stringify(startCounterValue));
-  //   localStorage.setItem("maxCounterKey", JSON.stringify(maxCounterValue));
-  //   localStorage.setItem("valueKey", JSON.stringify(counterValue));
-  // }, [counterValue, startValue, maxValue, startCounterValue, maxCounterValue]);
+  useEffect(() => {
+    localStorage.setItem("valueKey", JSON.stringify(counter.counterValue));
+    localStorage.setItem("startKey", JSON.stringify(counter.startValue));
+    localStorage.setItem("maxKey", JSON.stringify(counter.maxValue));
+    localStorage.setItem("startSettingKey", JSON.stringify(setting.startValue));
+    localStorage.setItem("maxSettingKey", JSON.stringify(setting.maxValue));
+  }, [counter.counterValue, counter.startValue, counter.maxValue, setting.startValue, setting.maxValue]);
 
   return (
     <div className="app">
